@@ -12,7 +12,18 @@ const { frontmatter } = Astro.props;
     )
   }
   <slot />
-  <p><em>Post published {frontmatter.pubDate.toString().slice(0, 10)}</em></p>
+  <p>
+    <em
+      >Post publié le {
+        frontmatter.pubDate.toLocaleDateString('fr-FR', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
+      }</em
+    >
+  </p>
 
   <div class="tags">
     {

@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/MarkdownLayout.astro
 title: 'Tropic of Capricorn'
 author: 'Henry Miller'
 pubDate: 2025-08-02

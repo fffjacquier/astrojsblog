@@ -1,24 +1,22 @@
 ---
-import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BookLink from '../../components/BookLink.astro';
+import { getCollection } from 'astro:content';
 
-export const getStaticPaths = (() => {
-  const allBooks = Object.values(import.meta.glob('../books/*.md', { eager: true }));
-  const uniqueTags = [
-    ...new Set(allBooks.map((book: any) => book.frontmatter.tags).flat()),
-  ];
+export async function getStaticPaths() {
+  const allBooks = await getCollection('book');
+  const uniqueTags = [...new Set(allBooks.map((book: any) => book.data.tags).flat())];
 
   return uniqueTags.map((tag) => {
     const booksFilteredByTag = allBooks.filter((book: any) =>
-      book.frontmatter.tags?.includes(tag)
+      book.data.tags?.includes(tag)
     );
     return {
       params: { tag },
       props: { books: booksFilteredByTag },
     };
   });
-}) satisfies GetStaticPaths;
+}
 
 const { tag } = Astro.params;
 const { books } = Astro.props;
@@ -29,12 +27,12 @@ const { books } = Astro.props;
 
   <ul>
     {
-      books.map((book: any) => (
+      books.map((book) => (
         <li>
           <BookLink
-            url={book.url}
-            title={book.frontmatter.title}
-            author={book.frontmatter.author}
+            url={`/books/${book.id}/`}
+            title={book.data.title}
+            author={book.data.author}
           />
         </li>
       ))

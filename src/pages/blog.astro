@@ -1,17 +1,10 @@
 ---
+import { getCollection } from 'astro:content';
 import BookLink from '../components/BookLink.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import type { MarkdownInstance } from 'astro';
-interface Frontmatter {
-  title: string;
-  author: string;
-  description?: string;
-}
 
 const pageTitle = 'My blog book';
-const allBooks = Object.values(
-  import.meta.glob<MarkdownInstance<Frontmatter>>('./books/*.md', { eager: true })
-);
+const allBooks = await getCollection('book');
 ---
 
 <BaseLayout pageTitle={pageTitle}>
@@ -19,9 +12,9 @@ const allBooks = Object.values(
 
   <ul>
     {
-      allBooks.map(({ url, frontmatter: { title, author } }) => (
+      allBooks.map(({ id, data: { title, author } }) => (
         <li>
-          <BookLink url={url} title={title} author={author} />
+          <BookLink url={`/books/${id}`} title={title} author={author} />
         </li>
       ))
     }

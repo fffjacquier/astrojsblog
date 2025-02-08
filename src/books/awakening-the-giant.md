@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/MarkdownLayout.astro
 title: 'Awakening the giant inside'
 pubDate: 2025-08-02
 description: 'Some great lines from the book Awakening the giant inside.'

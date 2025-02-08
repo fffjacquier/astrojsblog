@@ -1,11 +1,9 @@
 ---
-import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
-const allBooks = Object.values(import.meta.glob('../books/*.md', { eager: true }));
-const tags = [
-  ...new Set(allBooks.map((book: any) => book.frontmatter.tags).flat()),
-].sort();
+const allBooks = await getCollection('book');
+const tags = [...new Set(allBooks.map((book: any) => book.data.tags).flat())].sort();
 ---
 
 <style>

@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/MarkdownLayout.astro
 title: 'La route du retour'
 pubDate: 2025-08-02
 pubYear: '1998'
