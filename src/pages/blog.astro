@@ -1,0 +1,29 @@
+---
+import BookLink from '../components/BookLink.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import type { MarkdownInstance } from 'astro';
+interface Frontmatter {
+  title: string;
+  author: string;
+  description?: string;
+}
+
+const pageTitle = 'My blog book';
+const allBooks = Object.values(
+  import.meta.glob<MarkdownInstance<Frontmatter>>('./books/*.md', { eager: true })
+);
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <p>Here is the list of the recent stuff I read</p>
+
+  <ul>
+    {
+      allBooks.map(({ url, frontmatter: { title, author } }) => (
+        <li>
+          <BookLink url={url} title={title} author={author} />
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

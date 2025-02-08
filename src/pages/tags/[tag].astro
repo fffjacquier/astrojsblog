@@ -1,0 +1,43 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BookLink from '../../components/BookLink.astro';
+
+export const getStaticPaths = (() => {
+  const allBooks = Object.values(import.meta.glob('../books/*.md', { eager: true }));
+  const uniqueTags = [
+    ...new Set(allBooks.map((book: any) => book.frontmatter.tags).flat()),
+  ];
+
+  return uniqueTags.map((tag) => {
+    const booksFilteredByTag = allBooks.filter((book: any) =>
+      book.frontmatter.tags?.includes(tag)
+    );
+    return {
+      params: { tag },
+      props: { books: booksFilteredByTag },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { tag } = Astro.params;
+const { books } = Astro.props;
+---
+
+<BaseLayout pageTitle={tag}>
+  <p>Books with tag <em>{tag}</em></p>
+
+  <ul>
+    {
+      books.map((book: any) => (
+        <li>
+          <BookLink
+            url={book.url}
+            title={book.frontmatter.title}
+            author={book.frontmatter.author}
+          />
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

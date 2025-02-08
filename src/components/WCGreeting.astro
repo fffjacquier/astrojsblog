@@ -1,0 +1,38 @@
+---
+const { messages } = Astro.props;
+---
+
+<wc-greeting data-messages={messages}>
+  <h3>&nbsp;</h3>
+  <button aria-label="Heart">💜</button> × <span>0</span>
+</wc-greeting>
+
+<script>
+  class Greeting extends HTMLElement {
+    connectedCallback() {
+      let count = 0;
+      const messages = this.dataset.messages?.split(',') || [];
+      const randomGreet = () => messages[Math.floor(Math.random() * messages.length)];
+
+      const heartBtn = this.querySelector('button');
+      const countElt = this.querySelector('span');
+      const h3Elt = this.querySelector('h3');
+
+      messages.length > 0 && (h3Elt!.textContent = randomGreet());
+
+      heartBtn!.addEventListener('click', () => {
+        count++;
+        countElt!.textContent = count.toString();
+        messages.length > 0 && (h3Elt!.textContent = randomGreet());
+      });
+    }
+  }
+
+  customElements.define('wc-greeting', Greeting);
+</script>
+
+<style>
+  button {
+    cursor: pointer;
+  }
+</style>

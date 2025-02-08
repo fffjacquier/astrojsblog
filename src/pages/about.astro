@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = 'About page';
+const favs = ['polars', 'litterature', 'self-help', 'poetry'];
+const favColor = 'peru';
+const fontWeight = 'bolder';
+const textTransform = 'small-caps';
+---
+
+<head>
+  <style define:vars={{ favColor, fontWeight, textTransform }}>
+    h1 {
+      color: purple;
+      font-size: 4rem;
+    }
+    .fav {
+      color: var(--favColor);
+      font-weight: var(--fontWeight);
+      font-variant-caps: var(--textTransform);
+    }
+  </style>
+</head>
+<BaseLayout pageTitle={pageTitle}>
+  <h2>All the crunchy fluffy stuff about this blog and my ideas behind it</h2>
+
+  <p>I want to share beautiful pages from the books I am reading</p>
+
+  <p>Focus is set on form as well as content</p>
+
+  <p>My Favorite kind of books are:</p>
+  <ul>
+    {favs.map((fav) => <li class="fav">{fav}</li>)}
+  </ul>
+</BaseLayout>

@@ -1,16 +1,12 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WGreeting from '../components/WCGreeting.astro';
+import Greeting from '../components/Greeting';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1>Books I read</h1>
-  </body>
-</html>
+<BaseLayout pageTitle="Books I read">
+  <h2>Rest a test</h2>
+
+  <Greeting client:load messages={['Hi', 'Hello', 'Howdy', 'Hey there']} />
+  <WGreeting messages={['hello', 'bonjour', 'hola', 'welcome']} />
+</BaseLayout>
